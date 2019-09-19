@@ -1,0 +1,141 @@
+﻿
+@*<div class="card border-left-info shadow h-auto p-0 mb-2 border-0">
+    <div class="card-body" style="padding:1rem;">
+        <div class="row">
+            <div class="col-xl-8 col-lg-8">
+                <div class="col-xl-12 col-lg-12">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <br />
+                            <h1 class="mb-0" style="font-family:Calibri; font-weight:bold; color:black" id="activityReportName" name="activityReportName" align="center">COST SUMMARY</h1>
+                            <h4 class="mb-0 mt-0" style="font-family:Calibri; font-weight:normal; font-style:italic; color:black" id="activityReportName" name="activityReportName" align="center">Production cost per wmt mined</h4>
+                            <br />
+                        </div>
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card border-left-danger shadow h-auto p-0 mb-2 border-0">
+                                <div class="card-body" style="padding:1rem">
+                                    <canvas id="costSummary" style="display:block;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+                <br />
+                <div class="card border-left-info shadow h-auto p-0 mb-2 border-0">
+                    <div class="card-body" style="padding:1rem;">
+                        <div class="row mb-2">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="text-m font-weight-bold text-primary text-uppercase mb-0" style="font-size:small">Cost KPI:&nbsp;&nbsp;&nbsp;</div>
+                                <select class="form-control btn-outline-info" name="costKPI" id="costKPI" style="width:100%; text-align:center; display:inline;">
+                                    <option id="costKPI" style="background-color:white; color:black" value="1">Production cost per wmt mined</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="2">Barge Loading cost per wmt shipped</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="3">Ore mined per manhour utilized</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="4">Total site cost per wmt mined</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="5">Total site cost per manhour</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="6">Mining cost per tonnage per distance travelled</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="text-m font-weight-bold text-primary text-uppercase mb-0 mt-1" style="font-size:small">Report month:&nbsp;&nbsp;&nbsp;</div>
+                                <select class="form-control btn-outline-info" name="costKPI" id="costKPI" style="width:100%; text-align:center; display:inline;">
+                                    <option id="costKPI" style="background-color:white; color:black" value="1">January</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="2">February</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="3">March</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="4">April</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="5">May</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="6">June</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="7">July</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="8">August</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="9">September</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="10">October</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="11">November</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="12">December</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card border-left-success shadow h-auto p-0 mt-4 mb-2 border-0">
+                                    <div class="card-body" style="padding:1rem">
+                                        <div class="text-m font-weight-bold text-info text-uppercase mb-0" style="font-size:large">Production cost per wmt mined</div>
+                                        <div class="h1 mb-0 font-weight-bold text-gray-900" id="totalHours" name="totalHours">999,999.00 <a style="font-size:large">php</a></div>
+                                    </div>
+                                </div>
+                                <div class="card border-left-primary shadow h-auto p-0 mt-4 mb-2 border-0">
+                                    <div class="card-body" style="padding:1rem">
+                                        <div class="text-m font-weight-bold text-info text-uppercase mb-0" style="font-size:large">Production Cost</div>
+                                        <div class="h1 mb-0 font-weight-bold text-gray-900" id="totalHours" name="totalHours">999,999.00 <a style="font-size:large">php</a></div>
+                                    </div>
+                                </div>
+                                <div class="card border-left-primary shadow h-auto p-0 mt-4 mb-2 border-0">
+                                    <div class="card-body" style="padding:1rem">
+                                        <div class="text-m font-weight-bold text-info text-uppercase mb-0" style="font-size:large">Total Sapro & Limo </div>
+                                        <div class="h1 mb-0 font-weight-bold text-gray-900" id="totalHours" name="totalHours">999,999.00 <a style="font-size:large">wmt</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Theme/vendor/chart.js/Chart.js"></script>
+
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+        
+        var ctx = $('#costSummary');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [{
+                    label: 'Pesos',
+                    data: [1500, 0, 0, 0, 0, 21000, 8700, 8700, 32000, 0, 0, 0],
+                    backgroundColor: ['rgba(54, 162, 235, 0.3)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(201, 203, 207, 0.2)',
+                        'rgba(165, 125, 215, 0.2)'],
+                    borderColor: ['rgba(54, 162, 235, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 205, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(201, 203, 207, 1)',
+                        'rgba(165, 125, 215, 1)',
+                        'rgba(499, 54, 167, 1)',
+                        'rgba(56, 12, 123, 1)',
+                        'rgba(12, 234, 12, 1)',
+                        'rgba(23, 123, 456, 1)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Cost summary table'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    });
+</script>*@

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CMCOMTDashboardModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Site" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="CMCOMTDashboardEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="Logs" EntityType="CMCOMTDashboardModel.Log" />
+    <EntitySet Name="CostSettings" EntityType="CMCOMTDashboardModel.CostSetting" />
+  </EntityContainer>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="logID" />
+    </Key>
+    <Property Name="logID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="activity" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="startDateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="endDateTime" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="CostSetting">
+    <Key>
+      <PropertyRef Name="MonthID" />
+    </Key>
+    <Property Name="MonthID" Type="Int32" Nullable="false" />
+    <Property Name="Month" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ProductionCost" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="BargeloadingCost" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="TotalSiteCost" Type="Decimal" Precision="18" Scale="3" />
+  </EntityType>
+</Schema>

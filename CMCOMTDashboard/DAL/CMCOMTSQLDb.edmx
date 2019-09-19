@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CMCOMTDashboardModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CostSettings">
+          <Key>
+            <PropertyRef Name="MonthID" />
+          </Key>
+          <Property Name="MonthID" Type="int" Nullable="false" />
+          <Property Name="Month" Type="nvarchar" MaxLength="10" />
+          <Property Name="ProductionCost" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="BargeloadingCost" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="TotalSiteCost" Type="decimal" Precision="18" Scale="3" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="logID" />
+          </Key>
+          <Property Name="logID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="activity" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="startDateTime" Type="datetime" Nullable="false" />
+          <Property Name="endDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Site" Type="nvarchar" MaxLength="50" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="CMCOMTDashboardModelStoreContainer">
+          <EntitySet Name="CostSettings" EntityType="Self.CostSettings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CMCOMTDashboardModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Site" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="CMCOMTDashboardEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Logs" EntityType="CMCOMTDashboardModel.Log" />
+          <EntitySet Name="CostSettings" EntityType="CMCOMTDashboardModel.CostSetting" />
+        </EntityContainer>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="logID" />
+          </Key>
+          <Property Name="logID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="activity" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="startDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="endDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="CostSetting">
+          <Key>
+            <PropertyRef Name="MonthID" />
+          </Key>
+          <Property Name="MonthID" Type="Int32" Nullable="false" />
+          <Property Name="Month" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ProductionCost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="BargeloadingCost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="TotalSiteCost" Type="Decimal" Precision="18" Scale="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CMCOMTDashboardModelStoreContainer" CdmEntityContainer="CMCOMTDashboardEntities">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CMCOMTDashboardModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="CMCOMTDashboardModel.Log">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="endDateTime" ColumnName="endDateTime" />
+                <ScalarProperty Name="startDateTime" ColumnName="startDateTime" />
+                <ScalarProperty Name="activity" ColumnName="activity" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="logID" ColumnName="logID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CostSettings">
+            <EntityTypeMapping TypeName="CMCOMTDashboardModel.CostSetting">
+              <MappingFragment StoreEntitySet="CostSettings">
+                <ScalarProperty Name="TotalSiteCost" ColumnName="TotalSiteCost" />
+                <ScalarProperty Name="BargeloadingCost" ColumnName="BargeloadingCost" />
+                <ScalarProperty Name="ProductionCost" ColumnName="ProductionCost" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="MonthID" ColumnName="MonthID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

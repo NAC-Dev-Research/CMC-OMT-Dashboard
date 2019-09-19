@@ -1,0 +1,43 @@
+﻿@model PagedList.IPagedList<CMCOMTDashboard.Models.Log>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<h6 class="h1 mb-4" style="font-family:Calibri; font-weight:bold; color:black">Log List</h6>
+<br />
+
+<table id="logList" name="logList" class="table" style="width:95%">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Activity</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.username</td>
+                    <td>@item.activity</td>
+                    <td>@item.startDateTime</td>
+                    <td>@item.endDateTime</td>
+                </tr>
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>User</th>
+            <th>Activity</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="form-group" align="center">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Logs", new { page }))
+</div>

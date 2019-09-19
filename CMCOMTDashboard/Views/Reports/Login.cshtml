@@ -1,0 +1,52 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="sidebarRight" style="padding-left:15%; padding-top:25vh; padding-bottom:0px; text-align:center;" align="center">
+    @*<div class="card bg-white" style="height:12vw; border:none"></div>*@
+    <div class="card bg-white justify-content-center" style="width:80%; height:50vh; border:none">
+        <div class="text-center">
+            <h1 style="color:black">WELCOME!</h1>
+        </div>
+        <br />
+        <div class="form-label-group">
+            <input type="text" id="username" class="form-control" placeholder="Username" required autofocus>
+            <label for="inputEmail"></label>
+        </div>
+
+        <div class="form-label-group">
+            <input type="password" id="password" class="form-control" placeholder="Password" required>
+        </div>
+        <br />
+        <br />
+        <button id="login_btn" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold m-0" type="submit" onclick="LoginFunc()">Log in</button>
+        <button id="loading_btn" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" disabled>Signing in.. Please wait</button>
+        <div class="text-center">
+            <a class="small" href="#">Forgot password?</a>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+    $("#loading_btn").hide();
+    function LoginFunc() {
+        $("#login_btn").hide();
+        $("#loading_btn").show();
+        $.ajax({
+            type: "GET",
+            url: "/Reports/CheckLogin",
+            data: { Username: $("#username").val(), Password: $("#password").val() },
+            dataType: "json",
+            success: function (data) {
+                window.location.href = data.redirecturl;
+            },
+            error: function (httpRequest, textStatus, errorThrown) {
+                alert("Error: " + textStatus + " " + errorThrown + " " + httpRequest);
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,255 @@
+﻿@model CMCOMTDashboard.Models.Cost.ProdCostPerOreMinedDetails
+
+<div class="card border-left-info shadow h-auto p-0 mb-2 border-0">
+    <div class="card-body" style="padding:1rem;">
+        <div class="row">
+            <div class="col-xl-8 col-lg-8">
+                <div class="col-xl-12 col-lg-12">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <br />
+                            <h1 class="mb-0" style="font-family:Calibri; font-weight:bold; color:black" id="activityReportName" name="activityReportName" align="center">COST SUMMARY</h1>
+                            <h4 class="mb-0 mt-0" style="font-family:Calibri; font-weight:normal; font-style:italic; color:black" id="activityReportName" name="activityReportName" align="center">Production cost per wmt mined</h4>
+                            <br />
+                        </div>
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card border-left-danger shadow h-auto p-0 mb-2 border-0">
+                                <div class="card-body" style="padding:1rem">
+                                    <canvas id="costSummary" style="display:block;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+                <br />
+                <div class="card border-left-info shadow h-auto p-0 mb-2 border-0">
+                    <div class="card-body" style="padding:1rem;">
+                        <div class="row mb-2">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="text-m font-weight-bold text-primary text-uppercase mb-0" style="font-size:small">Cost KPI:&nbsp;&nbsp;&nbsp;</div>
+                                <select class="form-control btn-outline-info" name="costKPI" id="costKPI" style="width:100%; text-align:center; display:inline;">
+                                    <option id="costKPI" style="background-color:white; color:black" value="1">Production cost per wmt mined</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="2">Barge Loading cost per wmt shipped</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="3">Ore mined per manhour utilized</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="4">Total site cost per wmt mined</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="5">Total site cost per manhour</option>
+                                    <option id="costKPI" style="background-color:white; color:black" value="6">Mining cost per tonnage per distance travelled</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="text-m font-weight-bold text-primary text-uppercase mb-0 mt-1" style="font-size:small">Report month:&nbsp;&nbsp;&nbsp;</div>
+                                <select class="form-control btn-outline-info" name="reportMonth" id="reportMonth" style="width:100%; text-align:center; display:inline;">
+                                    <option id="reportMonth" style="background-color:white; color:black" value="1">January</option>
+                                    <option id="reportMonth" style="background-color:white; color:black" value="2">February</option>
+                                    <option id="reportMonth" style="background-color:white; color:black" value="3">March</option>
+                                    <option id="reportMonth" style="background-color:white; color:black" value="4">April</option>
+                                    <option id="reportMonth" style="background-color:white; color:black" value="5">May</option>
+                                    <option id="reportMonth" style="background-color:white; color:black" value="6">June</option>
+                                    <option id="reportMonth" style="background-color:white; color:black" value="7">July</option>
+                                    <option id="reportMonth" style="background-color:white; color:black" value="8">August</option>
+                                    <option id="reportMonth" style="background-color:white; color:black" value="9">September</option>
+                                    <option id="reportMonth" style="background-color:white; color:black" value="10">October</option>
+                                    <option id="reportMonth" style="background-color:white; color:black" value="11">November</option>
+                                    <option id="reportMonth" style="background-color:white; color:black" value="12">December</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="text-m font-weight-bold text-uppercase mt-4 mb-1" id="titleMonth" style="font-size:large; color:black">September report</div>
+                                <div class="card border-left-success shadow h-auto p-0 mb-2 border-0">
+                                    <div class="card-body" style="padding:1rem">
+                                        <div class="text-m font-weight-bold text-info text-uppercase mb-0" style="font-size:large">Production cost per wmt mined</div>
+                                        <div class="h1 mb-0 font-weight-bold text-gray-900" id="prodCostPerMined" name="prodCostPerMined">@Model.ProductionCostPerOreMined.ToString("#,##0.##") <a style="font-size:large">php</a></div>
+                                    </div>
+                                </div>
+                                <div class="card border-left-primary shadow h-auto p-0 mb-2 border-0">
+                                    <div class="card-body" style="padding:1rem">
+                                        <div class="text-m font-weight-bold text-info text-uppercase mb-0" style="font-size:large">Production cost</div>
+                                        <div class="h1 mb-0 font-weight-bold text-gray-900" id="prodCost" name="prodCost">@Model.ProductionCost.ToString("#,##0.##") <a style="font-size:large">php</a></div>
+                                    </div>
+                                </div>
+                                <div class="card border-left-primary shadow h-auto p-0 mb-2 border-0">
+                                    <div class="card-body" style="padding:1rem">
+                                        <div class="text-m font-weight-bold text-info text-uppercase mb-0" style="font-size:large">Total ore mined </div>
+                                        <div class="h1 mb-0 font-weight-bold text-gray-900" id="oreMined" name="oreMined">@Model.TotalOreMined.ToString("#,##0.##") <a style="font-size:large">wmt</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Theme/vendor/chart.js/Chart.js"></script>
+
+<script type="text/javascript">
+
+    $("#reportMonth").change(function () {
+        var month = "";
+        var prodCost = 0.0;
+        var totalOreMined = 0.0;
+        var prodCostPerOreMined = 0.0;
+        if ($("#reportMonth").val() === '1') {
+            month = 'January';
+            prodCost = @Model.JanuaryProdCost;
+            totalOreMined = @Model.JanuaryOreMined;
+            prodCostPerOreMined = @Model.JanuaryTotalCost;
+        }
+        else if ($("#reportMonth").val() === '2') {
+            month = 'February';
+            prodCost = @Model.FebruaryProdCost;
+            totalOreMined = @Model.FebruaryOreMined;
+            prodCostPerOreMined = @Model.FebruaryTotalCost;
+        }
+        else if ($("#reportMonth").val() === '3') {
+            month = 'March';
+            prodCost = @Model.MarchProdCost;
+            totalOreMined = @Model.MarchOreMined;
+            prodCostPerOreMined = @Model.MarchTotalCost;
+        }
+        else if ($("#reportMonth").val() === '4') {
+            month = 'April';
+            prodCost = @Model.AprilProdCost;
+            totalOreMined = @Model.AprilOreMined;
+            prodCostPerOreMined = @Model.AprilTotalCost;
+        }
+        else if ($("#reportMonth").val() === '5') {
+            month = 'May';
+            prodCost = @Model.MayProdCost;
+            totalOreMined = @Model.MayOreMined;
+            prodCostPerOreMined = @Model.MayTotalCost;
+        }
+        else if ($("#reportMonth").val() === '6') {
+            month = 'June';
+            prodCost = @Model.JuneProdCost;
+            totalOreMined = @Model.JuneOreMined;
+            prodCostPerOreMined = @Model.JuneTotalCost;
+        }
+        else if ($("#reportMonth").val() === '7') {
+            month = 'July';
+            prodCost = @Model.JulyProdCost;
+            totalOreMined = @Model.JulyOreMined;
+            prodCostPerOreMined = @Model.JulyTotalCost;
+        }
+        else if ($("#reportMonth").val() === '8') {
+            month = 'August';
+            prodCost = @Model.AugustProdCost;
+            totalOreMined = @Model.AugustOreMined;
+            prodCostPerOreMined = @Model.AugustTotalCost;
+        }
+        else if ($("#reportMonth").val() === '9') {
+            month = 'September';
+            prodCost = @Model.SeptemberProdCost;
+            totalOreMined = @Model.SeptemberOreMined;
+            prodCostPerOreMined = @Model.SeptemberTotalCost;
+        }
+        else if ($("#reportMonth").val() === '10') {
+            month = 'October';
+            prodCost = @Model.SeptemberProdCost;
+            totalOreMined = @Model.SeptemberOreMined;
+            prodCostPerOreMined = @Model.SeptemberTotalCost;
+        }
+
+        $("#titleMonth").empty();
+        $("#titleMonth").append("<div class='text-m font-weight-bold text-uppercase mt-4 mb-1' id='titleMonth' style='font-size:large; color:black'>" + month + " report</div>");
+
+        $("#prodCostPerMined").empty();
+        $("#prodCostPerMined").append("<div class='h1 mb-0 font-weight-bold text-gray-900' id='prodCostPerMined' name='prodCostPerMined'>" + Number(Math.round(prodCostPerOreMined + 'e2') + 'e-2').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " <a style='font-size:large'>php</a></div>");
+
+        $("#prodCost").empty();
+        $("#prodCost").append("<div class='h1 mb-0 font-weight-bold text-gray-900' id='prodCost' name='prodCost'>" + Number(Math.round(prodCost + 'e2') + 'e-2').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " <a style='font-size:large'>php</a></div>");
+
+        $("#oreMined").empty();
+        $("#oreMined").append("<div class='h1 mb-0 font-weight-bold text-gray-900' id='oreMined' name='oreMined'>" + Number(Math.round(totalOreMined + 'e2') + 'e-2').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " <a style='font-size:large'>wmt</a></div>");
+    })
+
+
+    $("#month").change(function () {
+        $.get("/CostHttpGet/GetCostSetting", { chosenMonth: $("#month").val() }, function (data, status) {
+            $("#currentMonth").empty();
+            $("#currentMonth").append("<h6 class='h5 mb-2 text-uppercase' style='font-family:Calibri; font-weight:bold; color:black' id='currentMonth'>Values for " + data.Month + "</h6>");
+
+            var prodCost = AddCommasString(data.ProductionCost);
+            var bargeCost = AddCommasString(data.BargeloadingCost);
+            var totalCost = AddCommasString(data.TotalSiteCost);
+
+            if (data.ProductionCost == 0)
+                prodCost = 0;
+            if (data.BargeloadingCost == 0)
+                bargeCost = 0;
+            if (data.TotalSiteCost == 0)
+                totalCost = 0;
+
+            document.getElementById("productionCost").value = prodCost;
+            document.getElementById("bargeCost").value = bargeCost;
+            document.getElementById("totalSiteCost").value = totalCost;
+
+        }, "json");
+    })
+
+    $(document).ready(function () {
+
+        var ctx = $('#costSummary');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [{
+                    label: 'Pesos',
+                    data: [@Model.JanuaryTotalCost,
+                        @Model.FebruaryTotalCost,
+                        @Model.MarchTotalCost,
+                        @Model.AprilTotalCost,
+                        @Model.MayTotalCost,
+                        @Model.JuneTotalCost,
+                        @Model.JulyTotalCost,
+                        @Model.AugustTotalCost,
+                        @Model.SeptemberTotalCost,
+                        @Model.OctoberTotalCost,
+                        @Model.NovemberTotalCost,
+                        @Model.DecemberTotalCost],
+                    backgroundColor: ['rgba(54, 162, 235, 0.3)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(201, 203, 207, 0.2)',
+                        'rgba(165, 125, 215, 0.2)'],
+                    borderColor: ['rgba(54, 162, 235, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 205, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(201, 203, 207, 1)',
+                        'rgba(165, 125, 215, 1)',
+                        'rgba(499, 54, 167, 1)',
+                        'rgba(56, 12, 123, 1)',
+                        'rgba(12, 234, 12, 1)',
+                        'rgba(23, 123, 456, 1)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Cost summary table'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    });
+</script>

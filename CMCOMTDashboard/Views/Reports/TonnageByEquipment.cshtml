@@ -1,0 +1,174 @@
+﻿@model CMCOMTDashboard.Models.MajorActivityDetails
+
+<div class="card border-left-info shadow h-auto p-0 mb-2 border-0">
+    <div class="card-body" style="padding:1rem;">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6">
+                <br /><br />
+                <h1 class="mb-0" style="font-family:Calibri; font-weight:bold; color:black" id="activityReportName" name="activityReportName" align="center">EQUIPMENT TONNAGE REPORT</h1>
+                <h6 class="mb-4" style="font-family:Calibri; font-weight:normal; color:black" align="center">@ViewBag.ReportDate | Company-owned equipment only</h6>
+                <br />
+                <div class="card border-left-danger shadow h-auto p-0 mb-2 border-0">
+                    <div class="card-body" style="padding:1rem">
+                        <canvas id="equipmentGraph" style="display:block;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6">
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card border-left-info shadow h-auto p-0 mb-2 border-0">
+                        <div class="card-body" style="padding:1rem">
+                            @using (Html.BeginForm("TonnageByEquipment", "Reports", FormMethod.Post))
+                            {
+                                <br />
+                                <div class="row mb-2">
+                                    <div class="col-xl-4 col-lg-4">
+                                        <div class="text-m font-weight-bold text-primary text-uppercase mb-0" style="font-size:small">Date from:&nbsp;&nbsp;&nbsp;</div>
+                                        <input type="date" class="form-control btn-outline-info" style="display:inline;" value="@System.DateTime.Now.ToString("yyyy-MM-dd")" id="chosenDateFrom" name="chosenDateFrom" />
+                                    </div>
+                                    <div class="col-xl-4 col-lg-4">
+                                        <div class="text-m font-weight-bold text-primary text-uppercase mb-0" style="font-size:small">Date to:&nbsp;&nbsp;&nbsp;</div>
+                                        <input type="date" class="form-control btn-outline-info" style="display:inline;" value="@System.DateTime.Now.ToString("yyyy-MM-dd")" id="chosenDateTo" name="chosenDateTo" />
+                                    </div>
+                                    <div class="col-xl-4 col-lg-4">
+                                        <div class="text-m font-weight-bold text-uppercase mb-0" style="font-size:medium; color:white">Show</div>
+                                        <button class="btn btn-info btn-icon-split" type="submit" style="width:100%" id="generateReport" name="generateReport">
+                                            <span class="text">Show date</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                            <div class="row mb-2">
+                                <div class="col-xl-8 col-lg-8">
+                                    <div class="text-m font-weight-bold text-primary text-uppercase mb-0" style="font-size:small">Equipment Type:&nbsp;</div>
+                                    <select class="form-control btn-outline-info" name="equipmentType" id="equipmentType" style="width:100%; text-align:center; display:inline;">
+                                        <option id="equipmentType" style="background-color:white; color:black" value="Dump Truck">Dump truck</option>
+                                        <option id="equipmentType" style="background-color:white; color:black" value="Excavator">Excavator/Wheel loader</option>
+                                    </select>
+                                </div>
+                                <div class="col-xl-4 col-lg-4">
+                                    <div class="text-m font-weight-bold text-uppercase mb-0" style="font-size:small; color:white">Major activity:&nbsp;&nbsp;&nbsp;</div>
+                                    <button class="btn btn-info btn-icon-split" type="submit" style="width:100%" id="generateReport" name="generateReport" onclick="GenerateData()">
+                                        <span class="text">Show data</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card border-left-primary shadow h-auto p-0 mb-2 border-0">
+                        <div class="card-body" style="padding:1rem">
+                            <div class="text-m font-weight-bold text-primary text-uppercase mb-0" style="font-size:x-large" id="reportType" name="reportType">@ViewBag.EquipmentType Tonnage</div>
+                            <div class="h1 mb-0 font-weight-bold text-gray-900" id="totalWMT" name="totalWMT">@Model.TotalWMT.ToString("#,##0.##") <a style="font-size:large">WMTs</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card border-left-danger shadow h-auto p-0 mb-2 border-0">
+                        <div class="card-body" style="padding:1rem">
+                            <div class="text-m font-weight-bold text-primary text-uppercase mb-0" style="font-size:x-large">Tonnage per hour</div>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6">
+                                    <div class="text-m font-weight-bold text-info text-uppercase mb-0" style="font-size:large">Total Hours</div>
+                                    <div class="h1 mb-0 font-weight-bold text-gray-900" id="totalHours" name="totalHours">@Model.TotalHours.ToString("#,##0.##") <a style="font-size:large">Hour(s)</a></div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6">
+                                    <div class="text-m font-weight-bold text-info text-uppercase mb-0" style="font-size:large">Total WMT per hour</div>
+                                    <div class="h1 mb-0 font-weight-bold text-gray-900" id="totalWMTPerHour" name="totalWMTPerHour">@Model.TotalWMTPerHour.ToString("#,##0.##") <a style="font-size:large">WMT/Hr</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card border-left-success shadow h-auto p-0 m-0 border-0">
+                        <div class="card-body" style="padding:1rem">
+                            <div class="text-m font-weight-bold text-primary text-uppercase mb-0" style="font-size:x-large">Tonnage breakdown <a style="font-size:medium">(WMT)</a></div>
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-4">
+                                    <div class="text-m font-weight-bold text-info text-uppercase mb-0" style="font-size:large">Saprolite</div>
+                                    <div class="h1 mb-0 font-weight-bold text-gray-900" id="saproWMT" name="saproWMT">@Model.SaproWMT.ToString("#,##0.##") </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-4">
+                                    <div class="text-m font-weight-bold text-info text-uppercase mb-0" style="font-size:large">Limonite</div>
+                                    <div class="h1 mb-0 font-weight-bold text-gray-900" id="limoWMT" name="limoWMT">@Model.LimoWMT.ToString("#,##0.##") </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-4">
+                                    <div class="text-m font-weight-bold text-info text-uppercase mb-0" style="font-size:large">Waste</div>
+                                    <div class="h1 mb-0 font-weight-bold text-gray-900" id="wasteWMT" name="wasteWMT">@Model.WasteWMT.ToString("#,##0.##") </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Theme/vendor/chart.js/Chart.js"></script>
+<script type="text/javascript">
+
+function GenerateData() {
+    $.get("/ReportsHttpGet/GetTonnageByEquipment", { equipmentType: $("#equipmentType").val() }, function (data, status) {
+        $("#reportType").empty();
+        $("#reportType").append("<div class='text-m font-weight-bold text-primary text-uppercase mb-0' style='font-size:x-large' id='reportType' name='reportType'>" + $("#equipmentType").val().toUpperCase() + " Tonnage</div>");
+
+        $("#totalWMT").empty();
+        $("#totalWMT").append("<div class='h1 mb-0 font-weight-bold text-gray-900' id='totalWMT' name='totalWMT'>" + data.TotalWMT.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " <a style='font-size:large'>WMTs</a></div>");
+
+        $("#totalHours").empty();
+        $("#totalHours").append("<div class='h1 mb-0 font-weight-bold text-gray-900' id='totalHours' name='totalHours'>" + data.TotalHours.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " <a style='font-size:large'>Hour(s)</a></div>");
+
+        $("#totalWMTPerHour").empty();
+        $("#totalWMTPerHour").append("<div class='h1 mb-0 font-weight-bold text-gray-900' id='totalWMTPerHour' name='totalWMTPerHour'>" + Number(Math.round(data.TotalWMTPerHour + 'e2') + 'e-2').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " <a style='font-size:large'>WMT/Hr</a></div>");
+
+        $("#saproWMT").empty();
+        $("#saproWMT").append("<div class='h1 mb-0 font-weight-bold text-gray-900' id='saproWMT' name='saproWMT'>" + data.SaproWMT.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " </div>");
+
+        $("#limoWMT").empty();
+        $("#limoWMT").append("<div class='h1 mb-0 font-weight-bold text-gray-900' id='limoWMT' name='limoWMT'>" + data.LimoWMT.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " </div>");
+
+        $("#wasteWMT").empty();
+        $("#wasteWMT").append("<div class='h1 mb-0 font-weight-bold text-gray-900' id='wasteWMT' name='wasteWMT'>" + data.WasteWMT.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " </div>");
+    }, "json");
+}
+
+$(document).ready(function () {
+    
+    var ctx = $('#equipmentGraph');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Dump Truck', 'Excavator'],
+            datasets: [{
+                label: 'WMTs',
+                data: [@ViewBag.DumpTruck, @ViewBag.Excavator],
+                backgroundColor: ['rgba(255, 99, 132, 0.3)',
+                    'rgba(255, 159, 64, 0.3)'],
+                borderColor: ['rgba(255, 99, 132, 1)',
+                    'rgba(255, 159, 64, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: 'Tonnage breakdown report'
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    $("#two").hide();
+});
+
+</script>

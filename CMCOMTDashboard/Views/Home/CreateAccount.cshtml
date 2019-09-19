@@ -1,0 +1,43 @@
+﻿
+<h6 class="h1 mb-4" style="font-family:Calibri; font-weight:bold; color:black">Create Account</h6>
+<br />
+
+@using (Html.BeginForm("CreateAccount", "Home", FormMethod.Post))
+{
+    <div class="form-label-group" style="width:30%;">
+        <input type="text" id="username" name="username" class="form-control border-left-primary" required autofocus>
+        <label for="username">Username</label>
+    </div>
+    <div class="form-label-group" style="width:30%;">
+        <input type="password" id="password" name="password" class="form-control border-left-primary" required autofocus>
+        <label for="password">Password</label>
+    </div>
+    <div class="form-label-group" style="width:30%;">
+        <input type="text" id="firstName" name="firstName" class="form-control border-left-primary" required autofocus>
+        <label for="firstName">First name</label>
+    </div>
+    <div class="form-label-group" style="width:30%;">
+        <input type="text" id="lastName" name="lastName" class="form-control border-left-primary" required autofocus>
+        <label for="lastName">Last name</label>
+    </div>
+    <div class="form-group mb-0" style="width:30%">
+        <select class="form-control border-left-primary" id="siteLocation" name="siteLocation" style="text-align:center; display:inline;">
+            <option id="siteLocation" name="siteLocation" style="background-color:white; color:black" value="CMC">CMC</option>
+            <option id="siteLocation" name="siteLocation" style="background-color:white; color:black" value="DMC">DMC</option>
+            <option id="siteLocation" name="siteLocation" style="background-color:white; color:black" value="HMC">HMC</option>
+            <option id="siteLocation" name="siteLocation" style="background-color:white; color:black" value="TMC">TMC</option>
+            <option id="siteLocation" name="siteLocation" style="background-color:white; color:black" value="RTN">RTN</option>
+            <option id="siteLocation" name="siteLocation" style="background-color:white; color:black" value="HO">Head Office</option>
+        </select>
+        <label for="siteLocation">Site location</label>
+    </div>
+    <div class="form-group" style="width:30%">
+        <select class="form-control border-left-primary" id="role" name="role" style="text-align:center; display:inline;">
+            <option id="role" name="role" style="background-color:white; color:black" value="user">User</option>
+            <option id="role" name="role" style="background-color:white; color:black" value="admin">Admin</option>
+        </select>
+        <label for="role">Role</label>
+    </div>
+
+    <button class="btn btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" name="btn_addAccount" id="btn_addAccount" style="width:30%" value="YES">Add Acount</button>
+}

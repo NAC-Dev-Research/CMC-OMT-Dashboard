@@ -1,0 +1,294 @@
+﻿@model CMCOMTDashboard.Models.Tonnage
+
+<div class="card border-left-info shadow h-auto p-0 mb-2 border-0">
+    <div class="card-body" style="padding:1rem">
+        <div class="row">
+            <div class="col-xl-8 col-lg-8">
+                <h6 class="h1 mb-0" style="font-family:Calibri; font-weight:bold; color:black">RUN-OF-MINE TONNAGE REPORT</h6>
+                <h6 style="font-family:Calibri; font-weight:normal; color:black">@ViewBag.ReportDate | Company-owned equipments only</h6>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+                @using (Html.BeginForm("Tonnage", "Reports", FormMethod.Post))
+                {
+                    <div align="right">
+                        <div class="text-m font-weight-bold text-uppercase mb-0" style="font-size:small; color:white">Show</div>
+                        <a class="btn btn-info btn-icon-split" href="#" data-toggle="modal" data-target="#dateRange" id="generateReport" name="generateReport">
+                            <span class="icon text-white-100"><i class="fas fa-calendar-alt"></i></span>
+                            <span class="text">Choose report date</span>
+                        </a>
+                    </div>
+
+                    <!-- Select Date Range Modal-->
+                    <div class="modal fade" id="dateRange" tabindex="-1" role="dialog" aria-labelledby="dateRange" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    Kindly select report date then click show data afterwards.
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row mb-2">
+                                        <div class="col-xl-6 col-lg-6">
+                                            <div class="text-m font-weight-bold text-primary text-uppercase mb-0" style="font-size:medium">Report date:&nbsp;&nbsp;&nbsp;</div>
+                                            <input type="date" class="form-control btn-outline-info" style="display:inline;" value="@System.DateTime.Now.ToString("yyyy-MM-dd")" id="chosenDate" name="chosenDate" />
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6">
+                                            <div class="text-m font-weight-bold text-uppercase mb-0" style="font-size:medium; color:white">Show data:&nbsp;&nbsp;&nbsp;</div>
+                                            <button class="btn btn-info btn-icon-split" type="submit" style="width:100%" id="generateReport" name="generateReport">
+                                                <span class="text">Show data</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4 col-lg-4">
+                <div class="card border-left-primary shadow h-auto p-0 m-0 border-0">
+                    <div class="card-body" style="padding:1rem">
+                        <div class="text-m font-weight-bold text-primary text-uppercase mb-0" style="font-size:x-large">
+                            Daily tonnage
+                        </div>
+                        <div class="h1 mb-0 font-weight-bold text-gray-900">@Model.TonnageDaily.ToString("#,##0") WMTs</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+                <div class="card border-left-success shadow h-auto p-0 m-0 border-0">
+                    <div class="card-body" style="padding:1rem">
+                        <div class="text-m font-weight-bold text-primary text-uppercase mb-0" style="font-size:x-large">
+                            Month-to-date tonnage
+                        </div>
+                        <div class="h1 mb-0 font-weight-bold text-gray-900">@Model.TonnageMonthly.ToString("#,##0") WMTs</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+                <div class="card border-left-danger shadow h-auto p-0 m-0 border-0">
+                    <div class="card-body" style="padding:1rem">
+                        <div class="text-m font-weight-bold text-primary text-uppercase mb-0" style="font-size:x-large">
+                            Year-to-date Tonnage
+                        </div>
+                        <div class="h1 mb-0 font-weight-bold text-gray-900">@Model.TonnageYearly.ToString("#,##0") WMTs</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br style="padding-bottom:0rem; margin-bottom:0rem; border-bottom:0rem" />
+        <div class="row">
+            <div class="col-xl-4 col-lg-4">
+                <div class="card border-left-primary shadow h-auto p-0 m-0 border-0">
+                    <a href="#dailyDetails" class="d-block card-header mb-0 pb-1 border-bottom-0" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="dailyDetails">
+                        <h6>Daily tonnage breakdown details</h6>
+                    </a>
+                    <div class="collapse show" id="dailyDetails">
+                        <div class="card-body" style="padding:.5rem">
+                            <h6 style="font-weight:bold; color:#4e73df">SAPROLITE:<a style="color:black; font-size:x-large">&nbsp; @Model.DailyTonnageSaprolite.ToString("#,##0.##")<a> <a style="font-size:large; color:black">WMTs</a> </h6>
+                            <h6 style="font-weight:bold; color:#4e73df">LIMONITE:<a style="color:black; font-size:x-large">&nbsp;&nbsp;&nbsp; @Model.DailyTonnageLimonite.ToString("#,##0.##")<a> <a style="font-size:large; color:black">WMTs</a> </h6>
+                            <h6 style="font-weight:bold; color:#4e73df">WASTE:<a style="color:white">i<a> <a style="color:black; font-size:x-large">&nbsp;&nbsp;&nbsp;&nbsp; @Model.DailyTonnageWaste.ToString("#,##0.##")<a> <a style="font-size:large; color:black">WMTs</a> </h6>
+                            <h6 style="font-weight:normal; font-size:small; color:grey">(Report for: @Model.DateDaily)</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+                <div class="card border-left-success shadow h-auto p-0 m-0 border-0">
+                    <a href="#monthlyDetails" class="d-block card-header mb-0 pb-1 border-bottom-0" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="dailyDetails">
+                        <h6>Monthly tonnage breakdown details</h6>
+                    </a>
+                    <div class="collapse show" id="monthlyDetails">
+                        <div class="card-body" style="padding:.5rem">
+                            <h6 style="font-weight:bold; color:#4e73df">SAPROLITE:<a style="color:black; font-size:x-large">&nbsp; @Model.MonthlyTonnageSaprolite.ToString("#,##0")<a> <a style="font-size:large; color:black">WMTs</a> </h6>
+                            <h6 style="font-weight:bold; color:#4e73df">LIMONITE:<a style="color:black; font-size:x-large">&nbsp;&nbsp;&nbsp; @Model.MonthlyTonnageLimonite.ToString("#,##0.##")<a> <a style="font-size:large; color:black">WMTs</a> </h6>
+                            <h6 style="font-weight:bold; color:#4e73df">WASTE:<a style="color:white">i<a> <a style="color:black; font-size:x-large">&nbsp;&nbsp;&nbsp;&nbsp; @Model.MonthlyTonnageWaste.ToString("#,##0.##")<a> <a style="font-size:large; color:black">WMTs</a> </h6>
+                            <h6 style="font-weight:normal; font-size:small; color:grey">(Report for the month of: @Model.DateMonthly/@Model.DateYearly)</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+                <div class="card border-left-danger shadow h-auto p-0 m-0 border-0">
+                    <a href="#yearlyDetails" class="d-block card-header mb-0 pb-1 border-bottom-0" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="dailyDetails">
+                        <h6>Year-to-date tonnage breakdown details</h6>
+                    </a>
+                    <div class="collapse show" id="yearlyDetails">
+                        <div class="card-body" style="padding:.5rem">
+                            <h6 style="font-weight:bold; color:#4e73df">SAPROLITE:<a style="color:black; font-size:x-large">&nbsp; @Model.YearlyTonnageSaprolite.ToString("#,##0")<a> <a style="font-size:large; color:black">WMTs</a> </h6>
+                            <h6 style="font-weight:bold; color:#4e73df">LIMONITE:<a style="color:black; font-size:x-large">&nbsp;&nbsp;&nbsp; @Model.YearlyTonnageLimonite.ToString("#,##0.##")<a> <a style="font-size:large; color:black">WMTs</a> </h6>
+                            <h6 style="font-weight:bold; color:#4e73df">WASTE:<a style="color:white">i<a> <a style="color:black; font-size:x-large">&nbsp;&nbsp;&nbsp;&nbsp; @Model.YearlyTonnageWaste.ToString("#,##0.##")<a> <a style="font-size:large; color:black">WMTs</a> </h6>
+                            <h6 style="font-weight:normal; font-size:small; color:grey">(Report for the year of: @Model.DateYearly)</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br style="padding-bottom:0rem; padding-top:0rem; margin-bottom:0rem; margin-top:0rem; border-bottom:0rem; border-top:0rem;" />
+        <div class="row">
+            <div class="col-xl-4 col-lg-4">
+                <div class="card border-left-primary shadow h-auto">
+                    <div class="card-body mt-3 mb-3" style="padding:.5rem">
+                        <canvas id="dailyTonnageChart" style="display:block;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+                <div class="card border-left-success shadow h-auto">
+                    <div class="card-body mt-3 mb-3" style="padding:.5rem;">
+                        <canvas id="monthlyTonnageChart" style="display:block;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+                <div class="card border-left-danger shadow h-auto">
+                    <div class="card-body mt-3 mb-3" style="padding:.5rem">
+                        <canvas id="yearlyTonnageChart" style="display:block;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Theme/vendor/chart.js/Chart.js"></script>
+<script type="text/javascript">
+
+    function GenerateData() {
+        
+    }
+
+    var ctx = $('#dailyTonnageChart');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Saprolite', 'Limonite', 'Waste'],
+            datasets: [{
+                label: 'WMTs',
+                data: [@Model.DailyTonnageSaprolite, @Model.DailyTonnageLimonite, @Model.DailyTonnageWaste],
+                backgroundColor: [  'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)'],
+                borderColor: [  'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: '@Model.DateDaily tonnage report'
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    
+    var ctx = $('#monthlyTonnageChart');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Saprolite', 'Limonite', 'Waste'],
+            datasets: [{
+                label: 'WMTs',
+                data: [@Model.MonthlyTonnageSaprolite, @Model.MonthlyTonnageLimonite, @Model.MonthlyTonnageWaste],
+                backgroundColor: [  'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)'],
+                borderColor: [  'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: '@Model.DateMonthly/@Model.DateYearly tonnage report'
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    @*var ctx = $('#monthlyTonnageChart');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [@Model.DateTwoMonthsBefore + '/' + @Model.DateYearly, @Model.DateOneMonthBefore + '/' + @Model.DateYearly, @Model.DateMonthly + '/' + @Model.DateYearly],
+            datasets: [{
+                data: [@Model.TonnageTwoMonthsBefore, @Model.TonnageOneMonthBefore, @Model.TonnageMonthly],
+                borderColor: "#3e95cd",
+                fill: false
+            }]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: 'Tonnage report for three months ending @Model.DateMonthly/@Model.DateYearly'
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });*@
+
+    var ctx = $('#yearlyTonnageChart');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Saprolite', 'Limonite', 'Waste'],
+            datasets: [{
+                label: 'WMTs',
+                data: [@Model.YearlyTonnageSaprolite, @Model.YearlyTonnageLimonite, @Model.YearlyTonnageWaste],
+                backgroundColor: [  'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)'],
+                borderColor: [  'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: 'Year-to-date tonnage report'
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    
+</script>

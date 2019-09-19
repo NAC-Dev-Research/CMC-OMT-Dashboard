@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CMCOMTDashboardModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CostSettings">
+    <Key>
+      <PropertyRef Name="MonthID" />
+    </Key>
+    <Property Name="MonthID" Type="int" Nullable="false" />
+    <Property Name="Month" Type="nvarchar" MaxLength="10" />
+    <Property Name="ProductionCost" Type="decimal" Precision="18" Scale="3" />
+    <Property Name="BargeloadingCost" Type="decimal" Precision="18" Scale="3" />
+    <Property Name="TotalSiteCost" Type="decimal" Precision="18" Scale="3" />
+  </EntityType>
+  <EntityType Name="Logs">
+    <Key>
+      <PropertyRef Name="logID" />
+    </Key>
+    <Property Name="logID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="activity" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="startDateTime" Type="datetime" Nullable="false" />
+    <Property Name="endDateTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Site" Type="nvarchar" MaxLength="50" />
+    <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="CMCOMTDashboardModelStoreContainer">
+    <EntitySet Name="CostSettings" EntityType="Self.CostSettings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

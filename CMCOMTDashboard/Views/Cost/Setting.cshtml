@@ -1,0 +1,194 @@
+﻿@model CMCOMTDashboard.Models.CostSetting
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<div class="col-xl-6 col-lg-6">
+    <div class="card border-left-info shadow h-auto p-0 mb-2 border-0">
+        <div class="card-body" style="padding:1rem">
+
+            <div class="col-xl-12 col-lg-12">
+                <h6 class="h1 mb-0 text-uppercase" style="font-family:Calibri; font-weight:bold; color:black">Cost report parameters</h6>
+                <br />
+            </div>
+            @using (Html.BeginForm("Setting", "Cost", FormMethod.Post))
+            {
+                <div class="col-xl-10 col-lg-10">
+                    <div class="text-m font-weight-bold text-primary text-uppercase mb-0" style="font-size:small">Report month:&nbsp;&nbsp;&nbsp;</div>
+                    <select class="form-control btn-outline-info" name="month" id="month" style="width:100%; text-align:center; display:inline;">
+                        <option id="month" style="background-color:white; color:black" value="1">January</option>
+                        <option id="month" style="background-color:white; color:black" value="2">February</option>
+                        <option id="month" style="background-color:white; color:black" value="3">March</option>
+                        <option id="month" style="background-color:white; color:black" value="4">April</option>
+                        <option id="month" style="background-color:white; color:black" value="5">May</option>
+                        <option id="month" style="background-color:white; color:black" value="6">June</option>
+                        <option id="month" style="background-color:white; color:black" value="7">July</option>
+                        <option id="month" style="background-color:white; color:black" value="8">August</option>
+                        <option id="month" style="background-color:white; color:black" value="9">September</option>
+                        <option id="month" style="background-color:white; color:black" value="10">October</option>
+                        <option id="month" style="background-color:white; color:black" value="11">November</option>
+                        <option id="month" style="background-color:white; color:black" value="12">December</option>
+                    </select>
+                    <br />
+                    <br />
+                </div>
+
+                <div class="col-xl-12 col-lg-12">
+                    <h6 class="h5 mb-2 text-uppercase" style="font-family:Calibri; font-weight:bold; color:black" id="currentMonth">Values for @Model.Month</h6>
+                </div>
+
+                <div class="col-xl-10 col-lg-10">
+                    <div class="card border-left-warning shadow h-auto p-0 mb-2 border-0">
+                        <div class="card-body" style="padding:1rem">
+                            <div class="text-m font-weight-bold text-primary mb-0" style="font-size:large">
+                                Production cost
+                            </div>
+                            <input class="form-control" value="@Model.ProductionCost" aria-label="productionCost" aria-describedby="productionCost"
+                                   style="text-align:right" name="productionCost" id="productionCost" OnBlur="addCommas(this)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-10 col-lg-10">
+                    <div class="card border-left-warning shadow h-auto p-0 mb-2 border-0">
+                        <div class="card-body" style="padding:1rem">
+                            <div class="text-m font-weight-bold text-primary mb-0" style="font-size:large">
+                                Barge loading cost
+                            </div>
+                            <input class="form-control" value="@Model.BargeloadingCost" aria-label="bargeCost" aria-describedby="bargeCost"
+                                   style="text-align:right" name="bargeCost" id="bargeCost" OnBlur="addCommas(this)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-10 col-lg-10">
+                    <div class="card border-left-warning shadow h-auto p-0 mb-2 border-0">
+                        <div class="card-body" style="padding:1rem">
+                            <div class="text-m font-weight-bold text-primary mb-0" style="font-size:large">
+                                Total site cost
+                            </div>
+                            <input class="form-control" value="@Model.TotalSiteCost" aria-label="totalSiteCost" aria-describedby="totalSiteCost"
+                                   style="text-align:right" name="totalSiteCost" id="totalSiteCost" OnBlur="addCommas(this)" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-10 col-lg-10">
+                    <br />
+                    <button class="btn btn-info btn-icon-split" type="submit" style="width:100%" id="saveData" name="saveData">
+                        <span class="text">Save data</span>
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //add commas in input fields using the input tag id
+    function addCommas(clientID) {
+        var nStr = document.getElementById(clientID.id).value;
+        if (nStr != "") {
+            nStr += '';
+            x = nStr.split('.');
+            if (!x[0]) {
+                x[0] = "0";
+            }
+            x1 = x[0];
+            if (!x[1]) {
+                x[1] = "00";
+            }
+            else {
+                x[1] = x[1].substring(0, 2);
+            }
+            x2 = x[1];
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            document.getElementById(clientID.id).value = x1 + "." + x2;
+            return true;
+        }
+    }
+    
+    function AddCommasString(givenNumber) {
+        var nStr = givenNumber;
+        if (nStr != "") {
+            nStr += '';
+            x = nStr.split('.');
+            if (!x[0]) {
+                x[0] = "0";
+            }
+            x1 = x[0];
+            if (!x[1]) {
+                x[1] = "00";
+            }
+            else {
+                x[1] = x[1].substring(0, 2);
+            }
+            x2 = x[1];
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            nStr = x1 + "." + x2;
+            return nStr;
+        }
+    }
+
+    // Restricts input for the given textbox to the given inputFilter.
+    function setInputFilter(textbox, inputFilter) {
+        ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
+            textbox.addEventListener(event, function () {
+                if (inputFilter(this.value)) {
+                    this.oldValue = this.value;
+                    this.oldSelectionStart = this.selectionStart;
+                    this.oldSelectionEnd = this.selectionEnd;
+                } else if (this.hasOwnProperty("oldValue")) {
+                    this.value = this.oldValue;
+                    this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                }
+            });
+        });
+    }
+
+    // Install input filters.
+    setInputFilter(document.getElementById("productionCost"), function (value) {
+        return /^\d*$/.test(value);
+    });
+    setInputFilter(document.getElementById("bargeCost"), function (value) {
+        return /^\d*$/.test(value);
+    });
+    setInputFilter(document.getElementById("totalSiteCost"), function (value) {
+        return /^\d*$/.test(value);
+    });
+
+    $("#month").change(function () {
+        $.get("/Cost/GetCostSetting", { chosenMonth: $("#month").val() }, function (data, status) {
+            $("#currentMonth").empty();
+            $("#currentMonth").append("<h6 class='h5 mb-2 text-uppercase' style='font-family:Calibri; font-weight:bold; color:black' id='currentMonth'>Values for " + data.Month + "</h6>");
+
+            var prodCost = AddCommasString(data.ProductionCost);
+            var bargeCost = AddCommasString(data.BargeloadingCost);
+            var totalCost = AddCommasString(data.TotalSiteCost);
+
+            if (data.ProductionCost == 0)
+                prodCost = 0;
+            if (data.BargeloadingCost == 0)
+                bargeCost = 0;
+            if (data.TotalSiteCost == 0)
+                totalCost = 0;
+
+            document.getElementById("productionCost").value = prodCost;
+            document.getElementById("bargeCost").value = bargeCost;
+            document.getElementById("totalSiteCost").value = totalCost;
+
+        }, "json");
+    })
+
+    $(document).ready(function () {
+        var prodCost = AddCommasString($("#productionCost").val());
+        var bargeCost = AddCommasString($("#bargeCost").val());
+        var totalCost = AddCommasString($("#totalSiteCost").val());
+
+        document.getElementById("productionCost").value = prodCost;
+        document.getElementById("bargeCost").value = bargeCost;
+        document.getElementById("totalSiteCost").value = totalCost;
+    });
+</script>
